@@ -1,8 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Create a VPC with EC2 instance, public and private subnets, route tables, and NAT Gateway.
 
+Parameters:
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: EC2 Key Pair
+
+  DBUsername:
+    Type: String
+    Default: admin
+
+  DBPassword:
+    Type: String
+    NoEcho: true
+    Description: Database Password
+
 Resources:
-  JabordVPC:
+  sampleVPC:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 102.0.0.0/16
@@ -10,309 +24,309 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: JabordVPC
+          Value: sampleVPC
     DeletionPolicy: Retain
 
-  JabordInternetGateway:
+  sampleInternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: JabordInternetGateway
+          Value: sampleInternetGateway
     DeletionPolicy: Retain
 
-  JabordVPCGatewayAttachment:
+  sampleVPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      VpcId: !Ref JabordVPC
-      InternetGatewayId: !Ref JabordInternetGateway
+      VpcId: !Ref sampleVPC
+      InternetGatewayId: !Ref sampleInternetGateway
     DeletionPolicy: Retain
 
-  JabordPublicSubnet1:
+  samplePublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.1.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 0, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet1
+          Value: samplePublicSubnet1
     DeletionPolicy: Retain
 
-  JabordPublicSubnet2:
+  samplePublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.3.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 1, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet2
+          Value: samplePublicSubnet2
     DeletionPolicy: Retain
 
-  JabordPublicSubnet3:
+  samplePublicSubnet3:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.4.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 2, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet3
+          Value: samplePublicSubnet3
     DeletionPolicy: Retain
 
-  JabordPublicSubnet4:
+  samplePublicSubnet4:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.5.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 3, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet4
+          Value: samplePublicSubnet4
     DeletionPolicy: Retain
 
-  JabordPublicSubnet5:
+  samplePublicSubnet5:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.6.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 4, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet5
+          Value: samplePublicSubnet5
     DeletionPolicy: Retain
 
-  JabordPublicSubnet6:
+  samplePublicSubnet6:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.7.0/24
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 5, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPublicSubnet6
+          Value: samplePublicSubnet6
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet1:
+  samplePrivateSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.2.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 0, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet1
+          Value: samplePrivateSubnet1
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet2:
+  samplePrivateSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.8.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 1, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet2
+          Value: samplePrivateSubnet2
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet3:
+  samplePrivateSubnet3:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.9.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 2, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet3
+          Value: samplePrivateSubnet3
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet4:
+  samplePrivateSubnet4:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.10.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 3, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet4
+          Value: samplePrivateSubnet4
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet5:
+  samplePrivateSubnet5:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.11.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 4, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet5
+          Value: samplePrivateSubnet5
     DeletionPolicy: Retain
 
-  JabordPrivateSubnet6:
+  samplePrivateSubnet6:
     Type: AWS::EC2::Subnet
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       CidrBlock: 102.0.12.0/24
       MapPublicIpOnLaunch: false
       AvailabilityZone: !Select [ 5, !GetAZs 'us-east-1' ]
       Tags:
         - Key: Name
-          Value: JabordPrivateSubnet6
+          Value: samplePrivateSubnet6
     DeletionPolicy: Retain
 
-  JabordPublicRouteTable:
+  samplePublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       Tags:
         - Key: Name
-          Value: JabordPublicRouteTable
+          Value: samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicRoute:
+  samplePublicRoute:
     Type: AWS::EC2::Route
-    DependsOn: JabordVPCGatewayAttachment
+    DependsOn: sampleVPCGatewayAttachment
     Properties:
-      RouteTableId: !Ref JabordPublicRouteTable
+      RouteTableId: !Ref samplePublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref JabordInternetGateway
+      GatewayId: !Ref sampleInternetGateway
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation1:
+  samplePublicSubnetRouteTableAssociation1:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet1
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet1
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation2:
+  samplePublicSubnetRouteTableAssociation2:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet2
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet2
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation3:
+  samplePublicSubnetRouteTableAssociation3:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet3
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet3
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation4:
+  samplePublicSubnetRouteTableAssociation4:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet4
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet4
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation5:
+  samplePublicSubnetRouteTableAssociation5:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet5
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet5
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordPublicSubnetRouteTableAssociation6:
+  samplePublicSubnetRouteTableAssociation6:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPublicSubnet6
-      RouteTableId: !Ref JabordPublicRouteTable
+      SubnetId: !Ref samplePublicSubnet6
+      RouteTableId: !Ref samplePublicRouteTable
     DeletionPolicy: Retain
 
-  JabordNATGatewayEIP:
+  sampleNATGatewayEIP:
     Type: AWS::EC2::EIP
     Properties:
       Domain: vpc
     DeletionPolicy: Retain
 
-  JabordNATGateway:
+  sampleNATGateway:
     Type: AWS::EC2::NatGateway
     Properties:
-      SubnetId: !Ref JabordPublicSubnet1
-      AllocationId: !GetAtt JabordNATGatewayEIP.AllocationId
+      SubnetId: !Ref samplePublicSubnet1
+      AllocationId: !GetAtt sampleNATGatewayEIP.AllocationId
       Tags:
         - Key: Name
-          Value: JabordNATGateway
+          Value: sampleNATGateway
     DeletionPolicy: Retain
 
-  JabordPrivateRouteTable:
+  samplePrivateRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       Tags:
         - Key: Name
-          Value: JabordPrivateRouteTable
+          Value: samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateRoute:
+  samplePrivateRoute:
     Type: AWS::EC2::Route
     Properties:
-      RouteTableId: !Ref JabordPrivateRouteTable
+      RouteTableId: !Ref samplePrivateRouteTable
       DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId: !Ref JabordNATGateway
+      NatGatewayId: !Ref sampleNATGateway
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation1:
+  samplePrivateSubnetRouteTableAssociation1:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet1
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet1
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation2:
+  samplePrivateSubnetRouteTableAssociation2:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet2
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet2
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation3:
+  samplePrivateSubnetRouteTableAssociation3:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet3
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet3
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation4:
+  samplePrivateSubnetRouteTableAssociation4:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet4
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet4
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation5:
+  samplePrivateSubnetRouteTableAssociation5:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet5
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet5
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  JabordPrivateSubnetRouteTableAssociation6:
+  samplePrivateSubnetRouteTableAssociation6:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref JabordPrivateSubnet6
-      RouteTableId: !Ref JabordPrivateRouteTable
+      SubnetId: !Ref samplePrivateSubnet6
+      RouteTableId: !Ref samplePrivateRouteTable
     DeletionPolicy: Retain
 
-  jabordSecurityGroup:
+  sampleSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: EC2SecurityGroup
       GroupDescription: Allow SSH and HTTP access
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -324,29 +338,29 @@ Resources:
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: jabordSecurityGroup
+          Value: sampleSecurityGroup
     DeletionPolicy: Retain
 
-  JabordEC2Instance:
+  sampleEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.medium
-      KeyName: jabord-production  # Replace with your key pair name
+      KeyName: !Ref KeyName
       ImageId: ami-01816d07b1128cd2d  # Replace with an appropriate AMI ID
-      SubnetId: !Ref JabordPrivateSubnet1
+      SubnetId: !Ref samplePrivateSubnet1
       SecurityGroupIds:
-        - !Ref jabordSecurityGroup
+        - !Ref sampleSecurityGroup
       Tags:
         - Key: Name
-          Value: JabordEC2Instance
+          Value: sampleEC2Instance
     DeletionPolicy: Retain
 
-  JabordSecurityGroup:
+  sampleSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: EC2SecurityGroup    
       GroupDescription: Allow SSH and HTTP access
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -358,27 +372,27 @@ Resources:
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: jabordSecurityGroup
+          Value: sampleSecurityGroup
     DeletionPolicy: Retain
 
-  JabordEC2InstanceWithElasticIP:
+  sampleEC2InstanceWithElasticIP:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: t2.micro
-      KeyName: jabord-production  # Replace with your key pair name
+      KeyName: !Ref KeyName
       ImageId: ami-01816d07b1128cd2d  # Replace with an appropriate AMI ID
-      SubnetId: !Ref JabordPublicSubnet1
+      SubnetId: !Ref samplePublicSubnet1
       SecurityGroupIds:
-        - !Ref jabordSecurityGroup
+        - !Ref sampleSecurityGroup
       Tags:
         - Key: Name
-          Value: JabordEC2InstanceWithElasticIP
+          Value: sampleEC2InstanceWithElasticIP
     DeletionPolicy: Retain
 
   ElasticIPForEC2:
     Type: AWS::EC2::EIP
     Properties:
-      InstanceId: !Ref JabordEC2InstanceWithElasticIP
+      InstanceId: !Ref sampleEC2InstanceWithElasticIP
     DeletionPolicy: Retain
 
   RDSSecurityGroup:
@@ -386,7 +400,7 @@ Resources:
     Properties:
       GroupName: RDSSecurityGroup
       GroupDescription: Allow access to RDS
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 3306
@@ -402,18 +416,18 @@ Resources:
     Properties:
       DBSubnetGroupDescription: Subnet group for RDS
       SubnetIds:
-        - !Ref JabordPublicSubnet1
-        - !Ref JabordPublicSubnet2
-        - !Ref JabordPublicSubnet3
-        - !Ref JabordPublicSubnet4
-        - !Ref JabordPublicSubnet5
-        - !Ref JabordPublicSubnet6
-        - !Ref JabordPrivateSubnet1
-        - !Ref JabordPrivateSubnet2
-        - !Ref JabordPrivateSubnet3
-        - !Ref JabordPrivateSubnet4
-        - !Ref JabordPrivateSubnet5
-        - !Ref JabordPrivateSubnet6
+        - !Ref samplePublicSubnet1
+        - !Ref samplePublicSubnet2
+        - !Ref samplePublicSubnet3
+        - !Ref samplePublicSubnet4
+        - !Ref samplePublicSubnet5
+        - !Ref samplePublicSubnet6
+        - !Ref samplePrivateSubnet1
+        - !Ref samplePrivateSubnet2
+        - !Ref samplePrivateSubnet3
+        - !Ref samplePrivateSubnet4
+        - !Ref samplePrivateSubnet5
+        - !Ref samplePrivateSubnet6
       Tags:
         - Key: Name
           Value: RDSSubnetGroup
@@ -425,8 +439,8 @@ Resources:
       DBInstanceClass: db.t3.medium
       AllocatedStorage: 100
       Engine: MySQL
-      MasterUsername: admin
-      MasterUserPassword: Admin12345
+      MasterUsername: !Ref DBUsername
+      MasterUserPassword: !Ref DBPassword
       VPCSecurityGroups:
         - !Ref RDSSecurityGroup
       DBSubnetGroupName: !Ref RDSSubnetGroup
@@ -437,17 +451,17 @@ Resources:
           Value: MyRDSInstance
     DeletionPolicy: Retain
 
-  JabordECSCluster:
+  sampleECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: JabordECSCluster
+      ClusterName: sampleECSCluster
     DeletionPolicy: Retain
 
   ECSServiceSecurityGroup1:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: ECS service SG 1
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 8080
@@ -462,7 +476,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: ECS service SG 2
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 8080
@@ -477,7 +491,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: ECS service SG 3
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 8080
@@ -492,7 +506,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: ECS service SG 4
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 8080
@@ -507,7 +521,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: ECS service SG 5
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 8080
@@ -521,7 +535,7 @@ Resources:
   ECSService1:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref JabordECSCluster
+      Cluster: !Ref sampleECSCluster
       DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref ECSTaskDefinition1
@@ -530,12 +544,12 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets:
-            - !Ref JabordPrivateSubnet1
-            - !Ref JabordPrivateSubnet2
-            - !Ref JabordPrivateSubnet3
-            - !Ref JabordPrivateSubnet4
-            - !Ref JabordPrivateSubnet5
-            - !Ref JabordPrivateSubnet6
+            - !Ref samplePrivateSubnet1
+            - !Ref samplePrivateSubnet2
+            - !Ref samplePrivateSubnet3
+            - !Ref samplePrivateSubnet4
+            - !Ref samplePrivateSubnet5
+            - !Ref samplePrivateSubnet6
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup1
     DeletionPolicy: Retain
@@ -543,7 +557,7 @@ Resources:
   ECSService2:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref JabordECSCluster
+      Cluster: !Ref sampleECSCluster
       DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref ECSTaskDefinition2
@@ -552,12 +566,12 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets:
-            - !Ref JabordPrivateSubnet1
-            - !Ref JabordPrivateSubnet2
-            - !Ref JabordPrivateSubnet3
-            - !Ref JabordPrivateSubnet4
-            - !Ref JabordPrivateSubnet5
-            - !Ref JabordPrivateSubnet6
+            - !Ref samplePrivateSubnet1
+            - !Ref samplePrivateSubnet2
+            - !Ref samplePrivateSubnet3
+            - !Ref samplePrivateSubnet4
+            - !Ref samplePrivateSubnet5
+            - !Ref samplePrivateSubnet6
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup2
     DeletionPolicy: Retain
@@ -565,7 +579,7 @@ Resources:
   ECSService3:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref JabordECSCluster
+      Cluster: !Ref sampleECSCluster
       DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref ECSTaskDefinition3
@@ -574,12 +588,12 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets:
-            - !Ref JabordPrivateSubnet1
-            - !Ref JabordPrivateSubnet2
-            - !Ref JabordPrivateSubnet3
-            - !Ref JabordPrivateSubnet4
-            - !Ref JabordPrivateSubnet5
-            - !Ref JabordPrivateSubnet6
+            - !Ref samplePrivateSubnet1
+            - !Ref samplePrivateSubnet2
+            - !Ref samplePrivateSubnet3
+            - !Ref samplePrivateSubnet4
+            - !Ref samplePrivateSubnet5
+            - !Ref samplePrivateSubnet6
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup3
     DeletionPolicy: Retain
@@ -587,7 +601,7 @@ Resources:
   ECSService4:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref JabordECSCluster
+      Cluster: !Ref sampleECSCluster
       DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref ECSTaskDefinition4
@@ -596,12 +610,12 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets:
-            - !Ref JabordPrivateSubnet1
-            - !Ref JabordPrivateSubnet2
-            - !Ref JabordPrivateSubnet3
-            - !Ref JabordPrivateSubnet4
-            - !Ref JabordPrivateSubnet5
-            - !Ref JabordPrivateSubnet6
+            - !Ref samplePrivateSubnet1
+            - !Ref samplePrivateSubnet2
+            - !Ref samplePrivateSubnet3
+            - !Ref samplePrivateSubnet4
+            - !Ref samplePrivateSubnet5
+            - !Ref samplePrivateSubnet6
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup4
     DeletionPolicy: Retain
@@ -609,7 +623,7 @@ Resources:
   ECSService5:
     Type: AWS::ECS::Service
     Properties:
-      Cluster: !Ref JabordECSCluster
+      Cluster: !Ref sampleECSCluster
       DesiredCount: 1
       LaunchType: FARGATE
       TaskDefinition: !Ref ECSTaskDefinition5
@@ -618,12 +632,12 @@ Resources:
         AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           Subnets:
-            - !Ref JabordPrivateSubnet1
-            - !Ref JabordPrivateSubnet2
-            - !Ref JabordPrivateSubnet3
-            - !Ref JabordPrivateSubnet4
-            - !Ref JabordPrivateSubnet5
-            - !Ref JabordPrivateSubnet6
+            - !Ref samplePrivateSubnet1
+            - !Ref samplePrivateSubnet2
+            - !Ref samplePrivateSubnet3
+            - !Ref samplePrivateSubnet4
+            - !Ref samplePrivateSubnet5
+            - !Ref samplePrivateSubnet6
           SecurityGroups:
             - !Ref ECSServiceSecurityGroup5
     DeletionPolicy: Retain
@@ -718,7 +732,7 @@ Resources:
     Properties:
       GroupName: ALBSecurityGroup
       GroupDescription: Allow HTTP and HTTPS traffic
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -741,128 +755,128 @@ Resources:
           Value: ALBSecurityGroup
     DeletionPolicy: Retain
 
-  JabordALB1:
+  sampleALB1:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: JabordALB1
+      Name: sampleALB1
       Scheme: internet-facing
       Subnets:
-        - !Ref JabordPublicSubnet1
-        - !Ref JabordPublicSubnet2
-        - !Ref JabordPublicSubnet3
-        - !Ref JabordPublicSubnet4
-        - !Ref JabordPublicSubnet5
-        - !Ref JabordPublicSubnet6
+        - !Ref samplePublicSubnet1
+        - !Ref samplePublicSubnet2
+        - !Ref samplePublicSubnet3
+        - !Ref samplePublicSubnet4
+        - !Ref samplePublicSubnet5
+        - !Ref samplePublicSubnet6
       SecurityGroups:
         - !Ref ALBSecurityGroup
       Type: application
       Tags:
         - Key: Name
-          Value: JabordALB1          
+          Value: sampleALB1          
     DeletionPolicy: Retain
 
-  JabordALBListener1:
+  sampleALBListener1:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      LoadBalancerArn: !Ref JabordALB1
+      LoadBalancerArn: !Ref sampleALB1
       Port: 80
       Protocol: HTTP
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref JabordTargetGroup1
+          TargetGroupArn: !Ref sampleTargetGroup1
     DeletionPolicy: Retain
 
-  JabordALB2:
+  sampleALB2:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: JabordALB2
+      Name: sampleALB2
       Scheme: internet-facing
       Subnets:
-        - !Ref JabordPublicSubnet1
-        - !Ref JabordPublicSubnet2
-        - !Ref JabordPublicSubnet3
-        - !Ref JabordPublicSubnet4
-        - !Ref JabordPublicSubnet5
-        - !Ref JabordPublicSubnet6
+        - !Ref samplePublicSubnet1
+        - !Ref samplePublicSubnet2
+        - !Ref samplePublicSubnet3
+        - !Ref samplePublicSubnet4
+        - !Ref samplePublicSubnet5
+        - !Ref samplePublicSubnet6
       SecurityGroups:
         - !Ref ALBSecurityGroup
       Type: application
       Tags:
         - Key: Name
-          Value: JabordALB2          
+          Value: sampleALB2          
     DeletionPolicy: Retain
 
-  JabordALBListener2:
+  sampleALBListener2:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
-      LoadBalancerArn: !Ref JabordALB2
+      LoadBalancerArn: !Ref sampleALB2
       Port: 80
       Protocol: HTTP
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref JabordTargetGroup2
+          TargetGroupArn: !Ref sampleTargetGroup2
     DeletionPolicy: Retain
 
-  JabordTargetGroup1:
+  sampleTargetGroup1:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: JabordTargetGroup1
+      Name: sampleTargetGroup1
       Port: 80
       Protocol: HTTP
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       TargetType: ip
       HealthCheckProtocol: HTTP
       HealthCheckPort: traffic-port
       HealthCheckPath: /
       Tags:
         - Key: Name
-          Value: JabordTargetGroup1
+          Value: sampleTargetGroup1
     DeletionPolicy: Retain
 
-  JabordTargetGroup2:
+  sampleTargetGroup2:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: JabordTargetGroup2
+      Name: sampleTargetGroup2
       Port: 80
       Protocol: HTTP
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       TargetType: ip
       HealthCheckProtocol: HTTP
       HealthCheckPort: traffic-port
       HealthCheckPath: /
       Tags:
         - Key: Name
-          Value: JabordTargetGroup2
+          Value: sampleTargetGroup2
     DeletionPolicy: Retain
 
-  JabordTargetGroup3:
+  sampleTargetGroup3:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: JabordTargetGroup3
+      Name: sampleTargetGroup3
       Port: 80
       Protocol: HTTP
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       TargetType: ip
       HealthCheckProtocol: HTTP
       HealthCheckPort: traffic-port
       HealthCheckPath: /
       Tags:
         - Key: Name
-          Value: JabordTargetGroup3
+          Value: sampleTargetGroup3
     DeletionPolicy: Retain
 
-  JabordTargetGroup4:
+  sampleTargetGroup4:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: JabordTargetGroup4
+      Name: sampleTargetGroup4
       Port: 80
       Protocol: HTTP
-      VpcId: !Ref JabordVPC
+      VpcId: !Ref sampleVPC
       TargetType: ip
       HealthCheckProtocol: HTTP
       HealthCheckPort: traffic-port
       HealthCheckPath: /
       Tags:
         - Key: Name
-          Value: JabordTargetGroup4
+          Value: sampleTargetGroup4
     DeletionPolicy: Retain
